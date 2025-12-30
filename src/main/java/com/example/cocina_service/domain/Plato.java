@@ -1,5 +1,6 @@
 package com.example.cocina_service.domain;
 
+import com.example.cocina_service.domain.dtos.PlatoDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +25,25 @@ public class Plato {
 
     private LocalDateTime horaReciboIngredientes;
 
+    private LocalDateTime horaFinalizado;
+
     private boolean finalizado;
 
     @PrePersist
     public void asignarHoraPedido() {
         this.horaPedido = LocalDateTime.now();
+    }
+
+    public PlatoDTO toDTO() {
+        PlatoDTO platoDTO = new PlatoDTO();
+        platoDTO.setId(this.id);
+        platoDTO.setReceta(this.receta);
+        platoDTO.setHoraPedido(this.horaPedido);
+        platoDTO.setHoraPedidoIngredientes(this.horaPedidoIngredientes);
+        platoDTO.setHoraReciboIngredientes(this.horaReciboIngredientes);
+        platoDTO.setHoraFinalizado(this.horaFinalizado);
+        platoDTO.setFinalizado(this.finalizado);
+        return platoDTO;
     }
 
 }
